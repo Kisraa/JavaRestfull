@@ -2,10 +2,10 @@ package vn.hoidanit.jobhunter.domain;
 
 import java.time.Instant;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,36 +14,31 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import vn.hoidanit.jobhunter.util.SecurityUtil;
-import vn.hoidanit.jobhunter.util.constant.GenderEnum;
 
+@Table(name = "companies")
 @Entity
-@Table(name = "users")
-public class User {
+public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotBlank(message = "name không được để trống")
     private String name;
 
-    @NotBlank(message = "email không được để trống")
-    private String email;
-
-    @NotBlank(message = "password không được để trống")
-    private String password;
-
-    private int age;
-
-    @Enumerated(EnumType.STRING)
-    private GenderEnum gender;
+    @Column(columnDefinition = "MEDIUMTEXT")
+    private String description;
 
     private String address;
 
-    @Column(columnDefinition = "MEDIUMTEXT")
-    private String refreshToken;
+    private String logo;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss a", timezone = "GMT+7")
     private Instant createdAt;
+
     private Instant updatedAt;
+
     private String createdBy;
+
     private String updatedBy;
 
     @PrePersist
@@ -80,36 +75,12 @@ public class User {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getDescription() {
+        return description;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public GenderEnum getGender() {
-        return gender;
-    }
-
-    public void setGender(GenderEnum gender) {
-        this.gender = gender;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getAddress() {
@@ -120,12 +91,12 @@ public class User {
         this.address = address;
     }
 
-    public String getRefreshToken() {
-        return refreshToken;
+    public String getLogo() {
+        return logo;
     }
 
-    public void setRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
     public Instant getCreatedAt() {
