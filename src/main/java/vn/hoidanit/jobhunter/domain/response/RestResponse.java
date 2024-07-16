@@ -1,4 +1,4 @@
-package vn.hoidanit.jobhunter.domain;
+package vn.hoidanit.jobhunter.domain.response;
 
 public class RestResponse<T> {
     private int statusCode;
@@ -7,16 +7,6 @@ public class RestResponse<T> {
     // message có thể là string, hoặc arrayList
     private Object message;
     private T data;
-
-    public RestResponse(int statusCode, String error, Object message, T data) {
-        this.statusCode = statusCode;
-        this.error = error;
-        this.message = message;
-        this.data = data;
-    }
-
-    public RestResponse() {
-    }
 
     public int getStatusCode() {
         return statusCode;

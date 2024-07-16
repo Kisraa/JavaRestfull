@@ -2,48 +2,57 @@ package vn.hoidanit.jobhunter.domain;
 
 import java.time.Instant;
 import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import vn.hoidanit.jobhunter.util.SecurityUtil;
+import vn.hoidanit.jobhunter.util.constant.LevelEnum;
 
-@Table(name = "companies")
 @Entity
-public class Company {
+@Table(name = "jobs")
+public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotBlank(message = "name không được để trống")
     private String name;
+    private String location;
+    private double salary;
+    private int quantity;
+    private LevelEnum level;
 
     @Column(columnDefinition = "MEDIUMTEXT")
     private String description;
 
-    private String address;
-
-    private String logo;
-
+    private Instant startDate;
+    private Instant endDate;
+    private boolean isActive;
     private Instant createdAt;
-
     private Instant updatedAt;
-
     private String createdBy;
-
     private String updatedBy;
 
-    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @JsonIgnore
-    List<User> users;
+    @JoinTable(name = "job_skill", joinColumns = @JoinColumn(name = "job_id"), inverseJoinColumns = @JoinColumn(name = "skill_id"))
+    private List<Skill> skills;
 
     @PrePersist
     public void handleBeforeCreate() {
@@ -79,6 +88,38 @@ public class Company {
         this.name = name;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public LevelEnum getLevel() {
+        return level;
+    }
+
+    public void setLevel(LevelEnum level) {
+        this.level = level;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -87,20 +128,28 @@ public class Company {
         this.description = description;
     }
 
-    public String getAddress() {
-        return address;
+    public Instant getStartDate() {
+        return startDate;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setStartDate(Instant startDate) {
+        this.startDate = startDate;
     }
 
-    public String getLogo() {
-        return logo;
+    public Instant getEndDate() {
+        return endDate;
     }
 
-    public void setLogo(String logo) {
-        this.logo = logo;
+    public void setEndDate(Instant endDate) {
+        this.endDate = endDate;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
     public Instant getCreatedAt() {
@@ -135,12 +184,20 @@ public class Company {
         this.updatedBy = updatedBy;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public List<Skill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<Skill> skills) {
+        this.skills = skills;
     }
 
 }

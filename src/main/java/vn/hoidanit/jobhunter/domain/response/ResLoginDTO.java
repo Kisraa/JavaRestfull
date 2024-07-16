@@ -8,28 +8,13 @@ public class ResLoginDTO {
 
     private UserLogin user;
 
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    public UserLogin getUser() {
-        return user;
-    }
-
-    public void setUser(UserLogin user) {
-        this.user = user;
-    }
-
     public static class UserLogin {
         private long id;
         private String email;
         private String name;
 
         public UserLogin() {
+
         }
 
         public UserLogin(long id, String email, String name) {
@@ -68,6 +53,7 @@ public class ResLoginDTO {
         private UserLogin user;
 
         public UserGetAccount() {
+
         }
 
         public UserGetAccount(UserLogin user) {
@@ -82,6 +68,22 @@ public class ResLoginDTO {
             this.user = user;
         }
 
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public UserLogin getUser() {
+        return user;
+    }
+
+    public void setUser(UserLogin user) {
+        this.user = user;
     }
 
 }
