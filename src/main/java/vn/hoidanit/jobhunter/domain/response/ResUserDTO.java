@@ -16,6 +16,8 @@ public class ResUserDTO {
 
     private CompanyUser company;
 
+    private RoleUser role;
+
     public static class CompanyUser {
         private long id;
         private String name;
@@ -46,12 +48,41 @@ public class ResUserDTO {
 
     }
 
-    public ResUserDTO() {
+    public static class RoleUser {
+        private long id;
+        private String name;
+
+        public long getId() {
+            return id;
+        }
+
+        public void setId(long id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public RoleUser(long id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        public RoleUser() {
+        }
 
     }
 
+    public ResUserDTO() {
+    }
+
     public ResUserDTO(long id, String email, String name, GenderEnum gender, String address, int age, Instant updatedAt,
-            Instant createdAt, CompanyUser company) {
+            Instant createdAt, CompanyUser company, RoleUser role) {
         this.id = id;
         this.email = email;
         this.name = name;
@@ -61,6 +92,7 @@ public class ResUserDTO {
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
         this.company = company;
+        this.role = role;
     }
 
     public long getId() {
@@ -133,6 +165,14 @@ public class ResUserDTO {
 
     public void setCompany(CompanyUser company) {
         this.company = company;
+    }
+
+    public RoleUser getRole() {
+        return role;
+    }
+
+    public void setRole(RoleUser role) {
+        this.role = role;
     }
 
 }
